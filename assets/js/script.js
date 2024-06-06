@@ -6,8 +6,22 @@ document.getElementById("status").addEventListener("click", e => getStatus(e));
 /* not actually using event listener for these lessons, but good habit to pass event into object handler */
 document.getElementById("submit").addEventListener("click", e => postForm(e));
 
+function processOptions(form) {
+    let optArray = [];
+
+    for (let entry of form.entries()) {
+        if (entry[0] === "options"); { // options is the key name as seen in DevTools
+            optArray.push(entry[1]); // then push each entry into temporary array
+        }
+    }
+}
+
 async function postForm(e) {
-    const form = new FormData(document.getElementById("checksform"));
+    const form = processOptions(new FormData(document.getElementById("checksform")));
+
+    for (let entry of form.entries()) {
+        console.log(entry);
+    }
 
     const response = await fetch(API_URL, {
         method: "POST",
