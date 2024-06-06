@@ -10,23 +10,24 @@ function processOptions(form) {
     let optArray = [];
 
     for (let entry of form.entries()) {
-        if (entry[0] === "options"); { // options is the key name as seen in DevTools
+        if (entry[0] === "options") { // options is the key name as seen in DevTools
             optArray.push(entry[1]); // then push each entry into temporary array
         }
     }
+    form.delete("options");
+
+    form.append("options", optArray.join());
+
+    return form;
 }
 
 async function postForm(e) {
     const form = processOptions(new FormData(document.getElementById("checksform")));
 
-    for (let entry of form.entries()) {
-        console.log(entry);
-    }
-
     const response = await fetch(API_URL, {
         method: "POST",
         headers: {
-                    "Authorization": API_KEY,
+                "Authorization": API_KEY,
                 },
         body: form,
          /* will make a post request to the API, authorize with API & attach the form as the body of the request */
